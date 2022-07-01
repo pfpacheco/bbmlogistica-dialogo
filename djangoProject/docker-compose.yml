@@ -11,7 +11,6 @@ services:
   postgres:
     container_name: "postgres"
     image: "postgres:13"
-    hostname: "postgres-localhost"
     ports:
       - "0.0.0.0:5432:5432"
     environment:
@@ -19,37 +18,55 @@ services:
       - POSTGRES_USER=dialogo
       - POSTGRES_PASSWORD=myDybBuniouzADDwFhQaj271
     volumes:
-      - /tmp/volumes/bbmlogistica/data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
     networks:
       - core
 
-  # redis data cache or reduce data latency
-  redis:
-    container_name: "redis"
-    image: "redis:7.0.2"
-    hostname: "redis-localhost"
-    ports:
-      - "0.0.0.0:6379:6379"
-    environment:
-      - REDIS_PASSWORD=gzeNhBmy5TdEepdWkAH4Dj2y
-      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
-    networks:
-      - core
+#  # redis data cache or reduce data latency
+#  redis:
+#    container_name: "redis"
+#    image: "redis:7.0.2"
+#    ports:
+#      - "0.0.0.0:6379:6379"
+#    environment:
+#      - REDIS_PASSWORD=gzeNhBmy5TdEepdWkAH4Dj2y
+#      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+#    networks:
+#      - core
+#
+#  # django application definitions
+#  app:
+#    container_name: "app"
+#    build:
+#      context: .
+#      dockerfile: "Dockerfile"
+#      args:
+#        - ENVIRONMENT=develop
+#    ports:
+#      - "0.0.0.0:8080:8080"
+#    command: "gunicorn app.asgi:application -b :8080 -w 2 -k uvicorn.workers.UvicornWorker"
+#    volumes:
+#      - static_volume:/opt/app/static
+#    networks:
+#      - core
+#    depends_on:
+#      - postgres
+#      - redis
+#
+#  #nginx core configuration
+#  nginx:
+#    container_name: "nginx"
+#    image: "nginx:1.23.0"
+#    ports:
+#      - "0.0.0.0:80:80"
+#    volumes:
+#      - /home/ppacheco/work_dir/bbmlogistica-dialogo/app/app/etc/nginx/conf.d:/etc/nginx/conf.d
+#      - static_volume:/opt/app/static
+#    networks:
+#      - core
+#    depends_on:
+#      - app
 
-  # django application definitions
-  app:
-    container_name: "app"
-    build:
-      context: .
-      dockerfile: "Dockerfile"
-      args:
-        - ENVIRONMENT=develop
-    hostname: "application-localhost"
-    ports:
-      - "0.0.0.0:8080:8080"
-    command: "gunicorn djangoProject.asgi:application -b :8080 -w 2 -k uvicorn.workers.UvicornWorker"
-    depends_on:
-      - postgres
-      - redis
-    networks:
-      - core
+volumes:
+  postgres_data:
+#  static_volume:
