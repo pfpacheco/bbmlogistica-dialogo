@@ -3,13 +3,9 @@ from django.db import models
 
 class Author(models.Model):
 
-    def __init__(self):
-        super(Author, self).__init__()
-        __tablename__ = "author"
-
-    id = models.BigIntegerField(name="Id", primary_key=True, auto_created=True)
-    name = models.CharField(name="Name", null=False, editable=True, unique=True, max_length=200)
-    forewords = models.CharField(name="Forewords", null=True, editable=True, max_length=1000)
+    id = models.BigAutoField(primary_key=True)
+    name = models.CharField(null=False, editable=True, unique=True, max_length=200)
+    forewords = models.TextField(null=True, editable=True, max_length=1000)
 
     class Meta:
         verbose_name = "Author"

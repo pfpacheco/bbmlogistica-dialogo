@@ -8,12 +8,10 @@ class BookInline(admin.StackedInline):
     can_delete = True
     verbose_name_plural = 'Books'
 
-    fields = ('id', 'title', 'author', 'description', 'isbn', 'price')
-    list_display = ('id', 'title', 'author', 'description', 'isbn', 'price')
+    fields = ('Title', 'Author', 'Description', 'Isbn', 'Price')
+    list_display = ('Title', 'Author', 'Description', 'Isbn', 'Price')
 
 
+@admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    inlines = [
-        BookInline
-    ]
-
+    pass

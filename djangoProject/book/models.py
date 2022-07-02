@@ -4,20 +4,16 @@ from author.models import Author
 
 class Book(models.Model):
 
-    def __init__(self):
-        super(Book, self).__init__()
-        __tablename__ = "book"
-
-    id = models.BigIntegerField(name="Id", primary_key=True, editable=False, auto_created=True)
-    title = models.CharField(name="Title", null=False, editable=True, max_length=200)
-    author = models.ForeignKey(Author, name="Author", on_delete=models.CASCADE)
-    description = models.CharField(name="Description", null=False, editable=True, max_length=1000)
-    isbn = models.BigIntegerField(name="isbn", null=False, editable=True)
-    price = models.FloatField(name="price", null=False, editable=True)
+    id = models.BigAutoField(primary_key=True)
+    title = models.CharField(null=False, editable=True, max_length=200)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    description = models.TextField(null=False, editable=True, max_length=1000)
+    isbn = models.CharField(null=False, editable=True, max_length=13)
+    price = models.FloatField(null=False, editable=True)
 
     class Meta:
-        verbose_name = "Product"
-        verbose_name_plural = "Products"
+        verbose_name = "Book"
+        verbose_name_plural = "Books"
 
     def __str__(self):
         return self.title
